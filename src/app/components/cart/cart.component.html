@@ -1,0 +1,41 @@
+<div class="container mt-5">
+  <p *ngIf="cartItems.length === 0">
+    Oops! Your cart is Empty! <br />
+    <button class="btn btn-dark mt-2" routerLink="">Continue Shopping</button>
+  </p>
+  <table class="table table-hover shadow bg-body-tertiary rounded" *ngIf="cartItems.length !== 0">
+    <thead>
+      <tr>
+        <th scope="col-3">Name</th>
+        <th scope="col-3">Quantity</th>
+        <th scope="col-3">Price</th>
+        <th scope="col-3">Action</th>
+      </tr>
+    </thead>
+    <tbody id="cartitems" *ngFor="let item of cartItems">
+      <tr class="shadow bg-body-tertiary rounded">
+        <td class="col-3">{{ item.title }}</td>
+        <td class="col-3">
+          <div class="container d-flex justify-content-start">
+            <!-- <div
+              class="bi bi-dash-circle mt-1 me-3"
+              style="cursor: pointer"
+            ></div> -->
+            <p class="fs-5 me-3">{{ item.quantity }}</p>
+            <!-- <div class="bi bi-plus-circle mt-1" style="cursor: pointer"></div> -->
+          </div>
+        </td>
+        <td class="col-3">₹ {{ item.price }}</td>
+        <td class="col-1">
+          <div class="btn btn-outline-danger" (click)="RemoveFromCart(item.id)">
+            Remove
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="text-end" *ngIf="cartItems.length !== 0">
+    <p> Total-₹ {{ getTotal()>0 ?getTotal():'' }}</p>
+    <button class="btn btn-success" (click)="CheckOut()">Check out</button>
+  </div>
+</div>

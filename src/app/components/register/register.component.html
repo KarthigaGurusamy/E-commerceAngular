@@ -1,0 +1,197 @@
+<!-- Section: Design Block -->
+<section class="text-center text-lg-start bg-body-tertiary">
+  <style>
+    .cascading-right {
+      margin-right: -50px;
+    }
+
+    @media (max-width: 990px) {
+      .cascading-right {
+        margin-right: 0;
+      }
+    }
+  </style>
+
+  <!-- Jumbotron -->
+  <div class="container py-4">
+    <div class="row g-0 align-items-center">
+      <div class="col-lg-6 mb-5 mb-lg-0">
+        <div
+          class="card cascading-right"
+          style="
+            background: hsla(0, 0%, 100%, 0.55);
+            backdrop-filter: blur(30px);
+          "
+        >
+          <div class="card-body p-5 shadow-5 text-center">
+            <h2 class="fw-bold mb-5">Sign Up</h2>
+            <form (ngSubmit)="onSubmit(registerForm)" #registerForm="ngForm">
+              <div class="form-outline mb-4">
+                <label class="form-label" for="form3Example3">Email</label>
+                <input
+                  type="email"
+                  id="form3Example3"
+                  class="form-control"
+                  name="email"
+                  ngModel
+                  pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                  required
+                  email
+                  #modelEmail="ngModel"
+                  [ngClass]="
+                    modelEmail.invalid && modelEmail.dirty ? 'is-invalid' : ''
+                  "
+                />
+                <div>
+                  <p
+                    *ngIf="modelEmail.invalid && modelEmail.dirty && modelEmail?.errors?.['pattern']"
+                    class="text-danger"
+                  >
+                    Please enter valid email
+                  </p>
+                  <p
+                    *ngIf="modelEmail.dirty && modelEmail?.errors?.['required']"
+                    class="text-danger"
+                  >
+                    Please enter email
+                  </p>
+                </div>
+              </div>
+              <div class="form-outline mb-4">
+                <label class="form-label" for="form3Example3">Name</label>
+                <input
+                  type="text"
+                  id="form3Example3"
+                  class="form-control"
+                  name="name"
+                  ngModel
+                  required
+                  pattern="^[a-zA-Z\- ']+$"
+                  minlength="3"
+                  #modelName="ngModel"
+                  [ngClass]="
+                    modelName.invalid && modelName.dirty ? 'is-invalid' : ''
+                  "
+                />
+                <div>
+                  <p
+                    *ngIf="modelName?.errors?.['minlength']?.['requiredLength']&& modelName.dirty && !modelName?.errors?.['pattern']"
+                    class="text-danger"
+                  >
+                    Please enter name of length
+                    {{modelName?.errors?.['minlength']?.['requiredLength'] | json}}
+                  </p>
+                  <p
+                    *ngIf="modelName?.errors?.['required'] && modelName.dirty"
+                    class="text-danger"
+                  >
+                    Please enter Name
+                  </p>
+                  <p *ngIf="modelName?.errors?.['pattern']" class="text-danger">
+                    Name should contain only alphabets
+                  </p>
+                </div>
+              </div>
+              <div class="form-outline mb-4">
+                <label class="form-label" for="form3Example4">Password</label>
+                <input
+                  type="password"
+                  id="form3Example4"
+                  class="form-control"
+                  name="password"
+                  ngModel
+                  required
+                  minlength="3"
+                  #modelPassword="ngModel"
+                  [ngClass]="
+                    modelPassword.invalid && modelPassword.dirty
+                      ? 'is-invalid'
+                      : ''
+                  "
+                />
+                <div>
+                  <p
+                    *ngIf="modelPassword?.errors?.['minlength'] && modelPassword.dirty"
+                    class="text-danger"
+                  >
+                    Please enter minimum password of length
+                    {{modelPassword?.errors?.['minlength']?.['requiredLength']}}
+                  </p>
+                  <p
+                    *ngIf="modelPassword?.errors?.['required'] && modelPassword.dirty"
+                    class="text-danger"
+                  >
+                    Please enter password!
+                  </p>
+                </div>
+              </div>
+              <div class="form-outline mb-4">
+                <label class="form-label" for="form3Example4"
+                  >Confirm Password</label
+                >
+                <input
+                  type="password"
+                  id="form3Example4"
+                  class="form-control"
+                  name="confirmpassword"
+                  ngModel
+                  required
+                  minlength="3"
+                  #modelConfirmPassword="ngModel"
+                  [ngClass]="
+                    modelConfirmPassword.dirty &&
+                    modelPassword.value !== modelConfirmPassword.value
+                      ? 'is-invalid'
+                      : ''
+                  "
+                />
+                <div>
+                  <p
+                    *ngIf="modelConfirmPassword?.errors?.['required'] && modelConfirmPassword.dirty"
+                    class="text-danger"
+                  >
+                    Please enter confirm password!
+                  </p>
+                  <p
+                    *ngIf="
+                      modelPassword.value !== modelConfirmPassword.value &&
+                      modelConfirmPassword.dirty && modelConfirmPassword.value
+                    "
+                    class="text-danger"
+                  >
+                    Password mismatch!
+                  </p>
+                </div>
+              </div>
+              <div class="d-flex justify-content-center mb-4">
+                <p>
+                  Existing User? <span><a routerLink="/login">Log In</a></span>
+                </p>
+              </div>
+
+              <!-- Submit button -->
+              <button
+                type="submit"
+                class="btn btn-primary btn-block mb-4"
+                [disabled]="registerForm.invalid"
+              >
+                Sign Up
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 mb-5 mb-lg-0">
+        <img
+          src="https://img.freepik.com/free-photo/join-us-register-newsletter-concept_53876-132697.jpg?size=626&ext=jpg&ga=GA1.1.835364551.1695889634&semt=ais"
+          class="w-100 rounded-4 shadow-4"
+          alt=""
+          style="height: 800px"
+        />
+      </div>
+    </div>
+  </div>
+  <!-- Jumbotron -->
+</section>
+<!-- Section: Design Block -->

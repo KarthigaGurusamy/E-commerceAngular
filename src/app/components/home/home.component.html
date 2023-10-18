@@ -1,0 +1,36 @@
+<div class="container">
+  <p class="text-black mt-3 mb-1 fs-1">Products</p>
+</div>
+<div class="container d-flex mt-3 mb-5">
+  <div class="row">
+    <div
+      class="card card-cascade col-4 shadow bg-body-tertiary rounded mb-5 me-2"
+      style="width: 23rem;"
+      *ngFor="let product of products"
+    >
+      <div class="view view-cascade overlay">
+        <img
+          class="card-img-top"
+          src="{{ product.image }}"
+          alt="Card image cap"
+          style="height: 300px; width: 342px"
+        />
+      </div>
+      <div class="card-body card-body-cascade text-center">
+        <div class="card-title">
+          <strong>{{product.title}}</strong>
+        </div>
+        <div class="font-weight-bold indigo-text py-2">
+          ₹ {{ product.price }}
+        </div>
+        <!-- <div class="card-text">{{ product.description }}</div> -->
+        <div class="btn btn-warning btn-rounded text-black fs-5 mt-3 me-3" (click)="AddToCart(product.id)">
+          Add to cart <span class="bi bi-cart"></span>
+        </div>
+        <div class="btn btn-success btn-rounded text-black fs-5 mt-3" (click)="ByProduct(product.id)">
+          Buy Now <span class="bi bi-bag"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

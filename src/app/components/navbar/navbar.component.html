@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-lg bg-dark">
+  <div class="container-fluid d-flex justify-content-between">
+    <div>
+      <a
+        class="bi bi-house btn no-outline fw-semibold me-5 text-white"
+        routerLink=""
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        Shop It
+      </a>
+    </div>
+    <div class="d-flex">
+      <div>
+        <a
+          class="bi bi-cart btn no-outline fw-semibold me-1 text-white"
+          routerLink="/cart"
+          routerLinkActive="active"
+        >
+          Cart<span>{{getCartCount()>0? - getCartCount():""}}</span>
+        </a>
+      </div>
+      <div>
+        <a
+          class="bi bi-box btn no-outline fw-semibold me-1 text-white"
+          routerLink="/orders"
+          routerLinkActive="active"
+        >
+          Orders
+        </a>
+      </div>
+      <div>
+        <a class="bi bi-box-arrow-right btn no-outline fw-semibold me-1 text-white" (click)="LogOutUser()" [class.disabled]="!IsUserLoggedIn()">
+          Log out
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
