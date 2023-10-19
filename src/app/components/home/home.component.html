@@ -5,7 +5,7 @@
   <div class="row">
     <div
       class="card card-cascade col-4 shadow bg-body-tertiary rounded mb-5 me-2"
-      style="width: 23rem;"
+      style="width: 23rem"
       *ngFor="let product of products"
     >
       <div class="view view-cascade overlay">
@@ -18,17 +18,38 @@
       </div>
       <div class="card-body card-body-cascade text-center">
         <div class="card-title">
-          <strong>{{product.title}}</strong>
+          <strong>{{ product.title }}</strong>
         </div>
         <div class="font-weight-bold indigo-text py-2">
           ₹ {{ product.price }}
         </div>
-        <!-- <div class="card-text">{{ product.description }}</div> -->
-        <div class="btn btn-warning btn-rounded text-black fs-5 mt-3 me-3" (click)="AddToCart(product.id)">
-          Add to cart <span class="bi bi-cart"></span>
-        </div>
-        <div class="btn btn-success btn-rounded text-black fs-5 mt-3" (click)="ByProduct(product.id)">
-          Buy Now <span class="bi bi-bag"></span>
+        <div class="d-flex justify-content-evenly">
+          <div
+            class="btn btn-warning btn-rounded text-black fs-5 mt-3 me-3"
+            (click)="AddToCart(product.id)"
+            *ngIf="!GetProductCount(product.id)"
+          >
+            Add to cart <span class="bi bi-cart"></span>
+          </div>
+          <div class="d-flex justify-content-start mt-4 gap-3" *ngIf="GetProductCount(product.id)">
+            <div
+              class="bi bi-dash-circle mt-1"
+              style="cursor: pointer"
+              (click)="AddToCart(product.id,'-')"
+            ></div>
+            <p class="fs-5">{{GetProductQuantity(product.id)}}</p>
+            <div
+              class="bi bi-plus-circle mt-1"
+              style="cursor: pointer"
+              (click)="AddToCart(product.id)"
+            ></div>
+          </div>
+          <div
+            class="btn btn-success btn-rounded text-black fs-5 mt-3"
+            (click)="BuyProduct(product.id)"
+          >
+            Buy Now <span class="bi bi-bag"></span>
+          </div>
         </div>
       </div>
     </div>

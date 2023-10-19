@@ -1,9 +1,16 @@
-<div class="container mt-5">
-  <p *ngIf="cartItems.length === 0">
+<div class="container mt-5" *ngIf="!GetCartLength()">
+  <p >
     Oops! Your cart is Empty! <br />
-    <button class="btn btn-dark mt-2" routerLink="/home">Continue Shopping</button>
+    <button class="btn btn-dark mt-2" routerLink="/home">
+      Continue Shopping
+    </button>
   </p>
-  <table class="table table-hover shadow bg-body-tertiary rounded" *ngIf="cartItems.length !== 0">
+</div>
+<div class="container mt-5">
+  <table
+    class="table table-hover shadow bg-body-tertiary rounded"
+    *ngIf="GetCartLength()"
+  >
     <thead>
       <tr>
         <th scope="col-3">Name</th>
@@ -13,19 +20,32 @@
       </tr>
     </thead>
     <tbody id="cartitems" *ngFor="let item of cartItems">
-      <tr class="shadow bg-body-tertiary rounded">
+      <tr
+        class="shadow bg-body-tertiary rounded"
+        *ngIf="IfCartItemExits(item.id)"
+      >
         <td class="col-3">{{ item.title }}</td>
         <td class="col-3">
-          <div class="container d-flex justify-content-start">
-            <!-- <div
-              class="bi bi-dash-circle mt-1 me-3"
+          <div class="d-flex justify-content-start gap-3">
+            <div
+              class="bi bi-dash-circle mt-1"
               style="cursor: pointer"
-            ></div> -->
-            <p class="fs-5 me-3">{{ item.quantity }}</p>
-            <!-- <div class="bi bi-plus-circle mt-1" style="cursor: pointer"></div> -->
+              (click)="AddToCart(item.productId, '-')"
+            ></div>
+            <p class="fs-5">
+              {{ GetProductQuantity(item.productId) }}
+            </p>
+            <div
+              class="bi bi-plus-circle mt-1"
+              style="cursor: pointer"
+              (click)="AddToCart(item.productId)"
+            ></div>
           </div>
         </td>
-        <td class="col-3">₹ {{ item.price }}</td>
+        <td class="col-3">
+          ₹
+          {{ GetProductPrice(item.productId) }}
+        </td>
         <td class="col-1">
           <div class="btn btn-outline-danger" (click)="RemoveFromCart(item.id)">
             Remove
@@ -34,8 +54,8 @@
       </tr>
     </tbody>
   </table>
-  <div class="text-end" *ngIf="cartItems.length !== 0">
-    <p> Total-₹ {{ getTotal()>0 ?getTotal():'' }}</p>
+  <div class="text-end" *ngIf="GetCartLength()">
+    <p>Total-₹ {{ getTotal() > 0 ? getTotal() : "" }}</p>
     <button class="btn btn-success" (click)="CheckOut()">Check out</button>
   </div>
 </div>

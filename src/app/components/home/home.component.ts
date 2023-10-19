@@ -39,19 +39,28 @@ export class HomeComponent {
     });
   }
 
-  AddToCart(id: number): void {
+  AddToCart(id: number,operator:string='+'): void {
+    console.log(id);
     if (this.storageService.IsLoggedInUser()) {
-      this.cartService.AddToCart(id);
+      this.cartService.AddToCart(id,operator);
     } else {
       this.router.navigate(['login'], { replaceUrl: true });
     }
   }
 
-  ByProduct(id: number): void {
+  BuyProduct(id: number): void {
     if (this.storageService.IsLoggedInUser()) {
       this.orderService.BuyNow(id);
     } else {
       this.router.navigate(['login'], { replaceUrl: true });
     }
+  }
+
+  GetProductCount(id:number):boolean{
+    return this.cartService.GetProductCount(id);
+  }
+
+  GetProductQuantity(id:number):number{
+    return this.cartService.GetProductQuantity(id);
   }
 }

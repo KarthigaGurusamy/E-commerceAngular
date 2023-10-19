@@ -16,7 +16,6 @@ export class CartService {
   ) {}
 
   getCartItems(): Cart[] {
-    
     let userDetails = JSON.parse(sessionStorage.getItem('loggedinuser')!);
 
     return JSON.parse(localStorage.getItem('cart')!).filter(
@@ -24,7 +23,7 @@ export class CartService {
     );
   }
 
-  AddToCart(id: number): void {
+  AddToCart(id: number, operator: string = '+'): void {
     let productsArr = JSON.parse(localStorage.getItem('products')!);
     let userDetails = JSON.parse(sessionStorage.getItem('loggedinuser')!);
     let cartArr = JSON.parse(localStorage.getItem('cart')!);
@@ -37,10 +36,27 @@ export class CartService {
             item.email === userDetails.email
         )
       ) {
-        for (let item of cartArr) {
-          if (item.productId === id && item.email === userDetails.email) {
-            item.quantity += 1;
-            item.price += productsArr.price;
+        if (operator === '+') {
+          for (let item of cartArr) {
+            if (item.productId === id && item.email === userDetails.email) {
+              item.quantity += 1;
+              item.price += productsArr.price;
+            }
+          }
+        } else {
+          for (let item of cartArr) {
+            if (item.productId === id && item.email === userDetails.email) {
+              if (
+                item.quantity - 1 !== 0 &&
+                item.price - productsArr.price !== 0
+              ) {
+                item.quantity -= 1;
+                item.price -= productsArr.price;
+              } else {
+                cartArr = cartArr.filter((item: Cart) => item.productId !== id);
+                // console.log(cartArr);
+              }
+            }
           }
         }
       } else {
@@ -123,16 +139,87 @@ export class CartService {
           date: new Date().toLocaleDateString(),
           productName: item.title,
           price: item.price,
-          quantity:item.quantity,
+          quantity: item.quantity,
           status: 'pending',
         });
       }
     }
 
-    cartArr=cartArr.filter((item:Cart)=>item.email!==user.email);
-    localStorage.setItem('cart',JSON.stringify(cartArr));
-    localStorage.setItem('orders',JSON.stringify(ordersArr));
-    return []
+    cartArr = cartArr.filter((item: Cart) => item.email !== user.email);
+    localStorage.setItem('cart', JSON.stringify(cartArr));
+    localStorage.setItem('orders', JSON.stringify(ordersArr));
+    return [];
   }
-  
+
+  GetProductCount(id: number): boolean {
+    let cartArr = JSON.parse(localStorage.getItem('cart')!);
+    let user = JSON.parse(sessionStorage.getItem('loggedinuser')!);
+    let productsArr = JSON.parse(localStorage.getItem('products')!);
+
+    productsArr = productsArr.find((product: Product) => product.id === id);
+    if (
+      cartArr.find(
+        (item: Cart) => item.productId === id && item.email === user.email
+      )
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  GetProductQuantity(id: number): number {
+    let user = JSON.parse(sessionStorage.getItem('loggedinuser')!);
+    let cartArr = JSON.parse(localStorage.getItem('cart')!);
+    if (cartArr.length > 0) {
+      if (
+        cartArr.find(
+          (item: Cart) => item.email === user.email && item.productId == id
+        ) !== undefined
+      ) {
+        cartArr = cartArr.find(
+          (item: Cart) => item.email === user.email && item.productId == id
+        );
+      }
+    }
+    return cartArr.quantity;
+  }
+
+  GetProductPrice(id: number): number {
+    let user = JSON.parse(sessionStorage.getItem('loggedinuser')!);
+    let cartArr = JSON.parse(localStorage.getItem('cart')!);
+    if (cartArr.length > 0) {
+      if (
+        cartArr.find(
+          (item: Cart) => item.email === user.email && item.productId == id
+        ) !== undefined
+      ) {
+        cartArr = cartArr.find(
+          (item: Cart) => item.email === user.email && item.productId == id
+        );
+      }
+    }
+    return cartArr.price;
+  }
+
+  GetCartLength(): boolean {
+    let cartArr = JSON.parse(localStorage.getItem('cart')!);
+    if (cartArr.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  IfCartItemExits(id:number):boolean{
+    let cartArr = JSON.parse(localStorage.getItem('cart')!);
+    if(cartArr.find((item:Cart)=>item.id===id))
+    {
+      return true;
+    }
+    else 
+    {
+      return false;
+    }
+  }
 }
