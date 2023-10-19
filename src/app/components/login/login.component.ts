@@ -21,7 +21,7 @@ export class LoginComponent {
     let isUser = this.authService.ValidateUser(loginForm.value);
     if(isUser)
     {
-      this.route.navigate([''],{replaceUrl:true});
+      this.route.navigate(['home'],{replaceUrl:true});
     }
     else
     {

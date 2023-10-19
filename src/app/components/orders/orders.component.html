@@ -1,7 +1,7 @@
 <div class="container mt-5">
   <p *ngIf="orderItems.length === 0">
     Oops! There are no orders placed! <br />
-    <button class="btn btn-dark mt-2" routerLink="">Shop Here</button>
+    <button class="btn btn-dark mt-2" routerLink="/home">Shop Here</button>
   </p>
   <table class="table table-hover shadow bg-body-tertiary rounded" *ngIf="orderItems.length !== 0">
     <thead>

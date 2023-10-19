@@ -12,6 +12,7 @@ import { OrdersComponent } from './components/orders/orders.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { FormsModule } from '@angular/forms';
+import { InfoComponent } from './components/info/info.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { FormsModule } from '@angular/forms';
     CartComponent,
     OrdersComponent,
     NavbarComponent,
-    NotfoundComponent
+    NotfoundComponent,
+    InfoComponent
   ],
   imports: [
     BrowserModule,
